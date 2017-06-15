@@ -66,7 +66,7 @@ class WishlistController extends FOSRestController
     public function firstAction(Request $request)
     {
         if (!$this->getUser()) {
-            throw new NotFoundHttpException();
+            return $this->redirectToRoute('sylius_shop_login');
         }
 
         // Get the first wishlist for the user
