@@ -27,10 +27,5 @@ class WishlistType extends AbstractResourceType
             'label'    => 'webburza_wishlist.wishlist.label.description',
             'required' => false
         ]);
-
-        $builder->add('public', Type\CheckboxType::class, [
-            'label'    => 'webburza_wishlist.wishlist.label.public',
-            'required' => false
-        ]);
     }
 }
