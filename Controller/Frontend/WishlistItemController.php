@@ -117,6 +117,9 @@ class WishlistItemController extends FOSRestController
         if (!($user = $this->getUser())) {
             throw new BadRequestHttpException();
         }
+        if($request->isXmlHttpRequest()) {
+            $request->setRequestFormat('json');
+        }
 
         // Get (or create) the wishlist to which the item should be added
         $wishlist = $this->resolveWishlist($request, $user);
@@ -126,6 +129,9 @@ class WishlistItemController extends FOSRestController
 
         // Prevent duplicates
         if ($wishlist->contains($productVariant)) {
+            if ($request->getRequestFormat() != 'html') {
+                return new JsonResponse(['errors' => 'вече е добавен'], Response::HTTP_BAD_REQUEST);
+            }
             // Set flash message
             $this->addFlash(
                 'info',
