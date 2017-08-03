@@ -17,4 +17,4 @@ webburza_wishlist:
                 templates:
                     form: WebburzaSyliusWishlistBundle:Backend:_form.html.twig
     type: sylius.resource
-    prefix: /admin
+    prefix: /admin-office
