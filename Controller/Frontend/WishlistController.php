@@ -37,6 +37,7 @@ class WishlistController extends FOSRestController
         $wishlist = $this->get('webburza_wishlist.repository.wishlist')->findOneBy([
             'slug' => $request->get('slug')
         ]);
+        $wishlists = $this->get('webburza_wishlist.repository.wishlist')->findBy(['user' => $this->getUser()]);
 
         // Check if wishlist exists, and it can be accessed
         if (!($wishlist && $this->userCanAccessWishlist($this->getUser(), $wishlist))) {
@@ -49,7 +50,8 @@ class WishlistController extends FOSRestController
             $view->setTemplate('WebburzaSyliusWishlistBundle:Frontend/Wishlist:show.html.twig');
 
             $view->setData([
-                'wishlist' => $wishlist
+                'wishlist' => $wishlist,
+                'wishlists' => $wishlists
             ]);
         }
 
@@ -153,7 +155,8 @@ class WishlistController extends FOSRestController
     protected function userCanAccessWishlist(
         UserInterface $user = null,
         WishlistInterface $wishlist
-    ) {
+    )
+    {
         return $wishlist->isPublic() || ($user && $user->getId() == $wishlist->getUser()->getId());
     }
 
